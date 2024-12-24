@@ -95,6 +95,7 @@ class _Slider extends StatelessWidget {
       value: value,
       min: 1000,
       max: 10000,
+      activeColor: redColor,
       onChanged: onChanged,
     );
   }
