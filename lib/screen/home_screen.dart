@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:random_number_generator/constant/color.dart';
 import 'dart:math';
 
+import 'package:random_number_generator/screen/setting_screen.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -29,7 +31,9 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               /// 제목과 아이콘 버튼이 있는 곳
-              _Header(),
+              _Header(
+                onPressed: onSettingIconPressed,
+              ),
 
               /// 숫자가 있는 곳
               _Body(
@@ -46,11 +50,22 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-  void generateRandomNumber(){
+
+  void onSettingIconPressed() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) {
+          return SettingScreen();
+        },
+      ),
+    );
+  }
+
+  void generateRandomNumber() {
     final rand = Random();
     final Set<int> newNumbers = {};
 
-    while(newNumbers.length<3){
+    while (newNumbers.length < 3) {
       final randomNumber = rand.nextInt(1000);
       newNumbers.add(randomNumber);
     }
@@ -62,7 +77,12 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class _Header extends StatelessWidget {
-  const _Header({super.key});
+  final VoidCallback onPressed;
+
+  const _Header({
+    required this.onPressed,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +99,7 @@ class _Header extends StatelessWidget {
         ),
         IconButton(
           color: redColor,
-          onPressed: () {},
+          onPressed: onPressed,
           icon: Icon(
             Icons.settings,
           ),
